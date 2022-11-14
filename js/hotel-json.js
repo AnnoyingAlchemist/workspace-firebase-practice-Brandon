@@ -1,14 +1,13 @@
 /* Change the configuration */
 
 var firebaseConfig = {
-  apiKey: 'AIzaSyAzcwgZuLA7dO9g4sQhXQVTUgCo0M8m2qM',
-  authDomain: 'grocerylist-91956.firebaseapp.com',
-  databaseURL: 'https://grocerylist-91956.firebaseio.com',
-  projectId: 'grocerylist-91956',
-  storageBucket: 'grocerylist-91956.appspot.com',
-  messagingSenderId: '813812426276',
-  appId: '1:813812426276:web:93e5897af12892ff78dab1',
-  measurementId: 'G-VZ83BTR72T',
+  apiKey: 'AIzaSyC6MU1P2CrLf5VDOmYOezQTvNFwUvI2h5A',
+  authDomain: 'grocery-list-6bb9d.firebaseapp.com',
+  projectId: 'grocery-list-6bb9d',
+  storageBucket: 'grocery-list-6bb9d.appspot.com',
+  messagingSenderId: '922973499349',
+  appId: '1:922973499349:web:75fedc4d9d7130ead7975c',
+  measurementId: 'G-VMWWNZRN5Z',
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -16,13 +15,26 @@ firebase.initializeApp(firebaseConfig);
 // enter data in
 $("input[type='button']").click(function (e) {
   //get the value of form
-
+  var inputdata = $('form').serializeArray();
+  var data = {};
+  for (i = 0; i < 5; i++) {
+    console.log(inputdata[i]);
+    console.log(inputdata[i].name);
+    console.log(inputdata[i].value);
+  }
+  inputdata.forEach((entry) => {
+    console.log(entry);
+    data[entry.name] = entry.value;
+  });
+  var hotelData = data;
+  console.log(data);
   /* save the data to database */
-
+  firebase.firestore().collection('hoteldata').add({
+    reservation: hotelData,
+  });
   /* clear the entry */
   $('form')[0].reset();
 });
-
 
 /* array example
 const array1 = ['a', 'b', 'c'];
@@ -31,16 +43,17 @@ array1.forEach(element => console.log(element));
 
 /* read the data from the database */
 
-/*
 firebase
   .firestore()
   .collection('hoteldata')
   .onSnapshot((querySnapshot) => {
     console.log(querySnapshot.size);
     querySnapshot.forEach((doc) => {
-      console.log(doc.data());
-      console.log(doc.data().room);
+      console.log(doc.data().reservation);
+      console.log(doc.data().name);
+      console.log(doc.data().checkin);
       console.log(doc.data().checkout);
+      console.log(doc.data().num);
+      console.log(doc.data().room);
     });
   });
-*/
